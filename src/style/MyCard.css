@@ -1,0 +1,8 @@
+.card-body {
+    background: bisque;
+}
+
+.card-text {
+    color : purple; 
+    font-weight: 600;
+}

@@ -1,0 +1,59 @@
+.articles-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.articles-page h1 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* --- GRILLE --- */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+/* --- CARDS --- */
+.article-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* --- IMAGE --- */
+.article-thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+/* --- TITRE --- */
+.article-card h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* --- CATÉGORIE --- */
+.category {
+  font-size: 0.9rem;
+  color: #6366f1;
+  font-weight: 600;
+}
