@@ -57,8 +57,53 @@ app.get("/articles", async (req, res) => {
 //route de récupération d'un article
 
 app.get("/articles/:id", async (req, res) => {
-    const article = await Article.findById(req.params.id);
-    res.json(article);
+    try {
+        const article = await Article.findById(req.params.id);
+        if (!article) {
+            return res.status(404).json({ success: false, message: "Article non trouvé" });
+        }
+        res.json(article);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+//route de modification d'un article
+app.put("/articles/:id", upload.array("images"), async (req, res) => {
+    try {
+        const { title, category, content } = req.body;
+        const article = await Article.findById(req.params.id);
+        if (!article) {
+            return res.status(404).json({ success: false, message: "Article non trouvé" });
+        }
+
+        const update = { title, category, content };
+        if (req.files && req.files.length > 0) {
+            const imageUrls = req.files.map(file => file.path);
+            update.images = [...article.images, ...imageUrls];
+        }
+
+        const updatedArticle = await Article.findByIdAndUpdate(req.params.id, update, { returnDocument: 'after' });
+        res.json({ success: true, article: updatedArticle });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+//route de suppression d'un article
+app.delete("/articles/:id", async (req, res) => {
+    try {
+        const article = await Article.findByIdAndDelete(req.params.id);
+        if (!article) {
+            return res.status(404).json({ success: false, message: "Article non trouvé" });
+        }
+        res.json({ success: true, message: "Article supprimé" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
 });
 
 app.listen(3000, () => console.log("API sur le port 3000"));  

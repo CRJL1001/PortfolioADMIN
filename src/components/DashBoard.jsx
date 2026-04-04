@@ -1,5 +1,6 @@
 import Sidebar from "../components/Sidebar";
 import CreationArticle from "./CreationArticle";
+import EditArticle from "./EditArticle";
 import "../style/dashboard.css";
 import { useState } from "react";
 import PageArticle from "./PageArticle";
@@ -19,6 +20,11 @@ export default function DashBoard() {
         setCurrentPage("detail");
     }
 
+    function handleEditArticle(id) {
+        setSelectedArticleId(id);
+        setCurrentPage("edit");
+    }
+
   return (
     <div className="dashboard">
       <Sidebar onPageChange={handlePageChange} activePage={currentPage} />
@@ -29,6 +35,14 @@ export default function DashBoard() {
           <ArticleDetail 
             articleId={selectedArticleId}
             onBack={() => setCurrentPage("articles")}
+            onEdit={handleEditArticle}
+          />
+        )}
+        {currentPage === "edit" && (
+          <EditArticle
+            articleId={selectedArticleId}
+            onBack={() => setCurrentPage("detail")}
+            onSaved={() => setCurrentPage("detail")}
           />
         )} 
       </main>
