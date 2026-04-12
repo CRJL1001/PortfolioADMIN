@@ -3,6 +3,7 @@ import cors from 'cors';
 import { connectDB } from './db.js';
 import { Article } from './Article.js';
 import { Experience } from './Experience.js';
+import { Competence } from './Competence.js';
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
 import cloudinary from "./cloudinary.js";
@@ -184,6 +185,88 @@ app.delete("/experiences/:id", async (req, res) => {
             return res.status(404).json({ success: false, message: "Expérience non trouvée" });
         }
         res.json({ success: true, message: "Expérience supprimée" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Routes pour les compétences
+
+// Créer une compétence
+app.post("/competences", async (req, res) => {
+    try {
+        const { name, level, category } = req.body;
+
+        const newCompetence = new Competence({
+            name,
+            level,
+            category,
+        });
+
+        await newCompetence.save();
+
+        res.json({ success: true, competence: newCompetence });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Récupérer toutes les compétences
+app.get("/competences", async (req, res) => {
+    try {
+        const competences = await Competence.find().sort({ name: 1 });
+        res.json(competences);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Récupérer une compétence par ID
+app.get("/competences/:id", async (req, res) => {
+    try {
+        const competence = await Competence.findById(req.params.id);
+        if (!competence) {
+            return res.status(404).json({ success: false, message: "Compétence non trouvée" });
+        }
+        res.json(competence);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Modifier une compétence
+app.put("/competences/:id", async (req, res) => {
+    try {
+        const { name, level, category } = req.body;
+        const competence = await Competence.findById(req.params.id);
+        if (!competence) {
+            return res.status(404).json({ success: false, message: "Compétence non trouvée" });
+        }
+
+        const updatedCompetence = await Competence.findByIdAndUpdate(
+            req.params.id,
+            { name, level, category },
+            { returnDocument: 'after' }
+        );
+        res.json({ success: true, competence: updatedCompetence });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Supprimer une compétence
+app.delete("/competences/:id", async (req, res) => {
+    try {
+        const competence = await Competence.findByIdAndDelete(req.params.id);
+        if (!competence) {
+            return res.status(404).json({ success: false, message: "Compétence non trouvée" });
+        }
+        res.json({ success: true, message: "Compétence supprimée" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: "Erreur serveur" });

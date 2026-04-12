@@ -33,6 +33,20 @@ export default function Sidebar({ onPageChange, activePage }) {
         >
           📋 Toutes les expériences
         </button>
+
+        <button
+          className={activePage === "createCompetence" ? "active" : ""}
+          onClick={() => onPageChange("createCompetence")}
+        >
+          🛠️ Créer une compétence
+        </button>
+
+        <button
+          className={activePage === "competences" ? "active" : ""}
+          onClick={() => onPageChange("competences")}
+        >
+          📚 Toutes les compétences
+        </button>
       </nav>
     </aside>
   );

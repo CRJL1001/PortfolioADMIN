@@ -9,11 +9,16 @@ import CreationExperience from "./CreationExperience";
 import PageExperience from "./PageExperience";
 import ExperienceDetail from "./ExperienceDetail";
 import EditExperience from "./EditExperience";
+import CreationCompetence from "./CreationCompetence";
+import PageCompetence from "./PageCompetence";
+import CompetenceDetail from "./CompetenceDetail";
+import EditCompetence from "./EditCompetence";
 
 export default function DashBoard() {
     const [currentPage, setCurrentPage] = useState("create");
     const [selectedArticleId, setSelectedArticleId] = useState(null);
     const [selectedExperienceId, setSelectedExperienceId] = useState(null);
+    const [selectedCompetenceId, setSelectedCompetenceId] = useState(null);
 
 
     function handlePageChange(page) {
@@ -38,6 +43,16 @@ export default function DashBoard() {
     function handleEditExperience(id) {
         setSelectedExperienceId(id);
         setCurrentPage("editExperience");
+    }
+
+    function handleSelectCompetence(id) {
+        setSelectedCompetenceId(id);
+        setCurrentPage("competenceDetail");
+    }
+
+    function handleEditCompetence(id) {
+        setSelectedCompetenceId(id);
+        setCurrentPage("editCompetence");
     }
 
   return (
@@ -79,6 +94,27 @@ export default function DashBoard() {
             experienceId={selectedExperienceId}
             onBack={() => setCurrentPage("experienceDetail")}
             onSaved={() => setCurrentPage("experienceDetail")}
+          />
+        )}
+        {currentPage === "createCompetence" && <CreationCompetence />}
+        {currentPage === "competences" && (
+          <PageCompetence
+            onSelectCompetence={handleSelectCompetence}
+            onEditCompetence={handleEditCompetence}
+          />
+        )}
+        {currentPage === "competenceDetail" && (
+          <CompetenceDetail
+            competenceId={selectedCompetenceId}
+            onBack={() => setCurrentPage("competences")}
+            onEdit={handleEditCompetence}
+          />
+        )}
+        {currentPage === "editCompetence" && (
+          <EditCompetence
+            competenceId={selectedCompetenceId}
+            onBack={() => setCurrentPage("competenceDetail")}
+            onSaved={() => setCurrentPage("competenceDetail")}
           />
         )}
       </main>
