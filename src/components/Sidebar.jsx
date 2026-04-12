@@ -19,6 +19,20 @@ export default function Sidebar({ onPageChange, activePage }) {
         >
           📄 Tous les articles
         </button>
+
+        <button
+          className={activePage === "createExperience" ? "active" : ""}
+          onClick={() => onPageChange("createExperience")}
+        >
+          💼 Créer une expérience
+        </button>
+
+        <button
+          className={activePage === "experiences" ? "active" : ""}
+          onClick={() => onPageChange("experiences")}
+        >
+          📋 Toutes les expériences
+        </button>
       </nav>
     </aside>
   );
