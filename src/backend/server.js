@@ -4,6 +4,7 @@ import { connectDB } from './db.js';
 import { Article } from './Article.js';
 import { Experience } from './Experience.js';
 import { Competence } from './Competence.js';
+import { Diplome } from './Diplome.js';
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
 import cloudinary from "./cloudinary.js";
@@ -267,6 +268,80 @@ app.delete("/competences/:id", async (req, res) => {
             return res.status(404).json({ success: false, message: "Compétence non trouvée" });
         }
         res.json({ success: true, message: "Compétence supprimée" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Routes pour les diplômes
+
+app.post("/diplomes", async (req, res) => {
+    try {
+        const { title, institution, date, description } = req.body;
+        const newDiplome = new Diplome({
+            title,
+            institution,
+            date,
+            description,
+        });
+        await newDiplome.save();
+        res.json({ success: true, diplome: newDiplome });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+app.get("/diplomes", async (req, res) => {
+    try {
+        const diplomes = await Diplome.find().sort({ date: -1 });
+        res.json(diplomes);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+app.get("/diplomes/:id", async (req, res) => {
+    try {
+        const diplome = await Diplome.findById(req.params.id);
+        if (!diplome) {
+            return res.status(404).json({ success: false, message: "Diplôme non trouvé" });
+        }
+        res.json(diplome);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+app.put("/diplomes/:id", async (req, res) => {
+    try {
+        const { title, institution, date, description } = req.body;
+        const diplome = await Diplome.findById(req.params.id);
+        if (!diplome) {
+            return res.status(404).json({ success: false, message: "Diplôme non trouvé" });
+        }
+        const updatedDiplome = await Diplome.findByIdAndUpdate(
+            req.params.id,
+            { title, institution, date, description },
+            { returnDocument: 'after' }
+        );
+        res.json({ success: true, diplome: updatedDiplome });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+app.delete("/diplomes/:id", async (req, res) => {
+    try {
+        const diplome = await Diplome.findByIdAndDelete(req.params.id);
+        if (!diplome) {
+            return res.status(404).json({ success: false, message: "Diplôme non trouvé" });
+        }
+        res.json({ success: true, message: "Diplôme supprimé" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: "Erreur serveur" });

@@ -47,6 +47,20 @@ export default function Sidebar({ onPageChange, activePage }) {
         >
           📚 Toutes les compétences
         </button>
+
+        <button
+          className={activePage === "createDiplome" ? "active" : ""}
+          onClick={() => onPageChange("createDiplome")}
+        >
+          🎓 Créer un diplôme
+        </button>
+
+        <button
+          className={activePage === "diplomes" ? "active" : ""}
+          onClick={() => onPageChange("diplomes")}
+        >
+          🧾 Tous les diplômes
+        </button>
       </nav>
     </aside>
   );

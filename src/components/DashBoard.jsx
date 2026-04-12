@@ -13,12 +13,17 @@ import CreationCompetence from "./CreationCompetence";
 import PageCompetence from "./PageCompetence";
 import CompetenceDetail from "./CompetenceDetail";
 import EditCompetence from "./EditCompetence";
+import CreationDiplome from "./CreationDiplome";
+import PageDiplome from "./PageDiplome";
+import DiplomeDetail from "./DiplomeDetail";
+import EditDiplome from "./EditDiplome";
 
 export default function DashBoard() {
     const [currentPage, setCurrentPage] = useState("create");
     const [selectedArticleId, setSelectedArticleId] = useState(null);
     const [selectedExperienceId, setSelectedExperienceId] = useState(null);
     const [selectedCompetenceId, setSelectedCompetenceId] = useState(null);
+    const [selectedDiplomeId, setSelectedDiplomeId] = useState(null);
 
 
     function handlePageChange(page) {
@@ -53,6 +58,16 @@ export default function DashBoard() {
     function handleEditCompetence(id) {
         setSelectedCompetenceId(id);
         setCurrentPage("editCompetence");
+    }
+
+    function handleSelectDiplome(id) {
+        setSelectedDiplomeId(id);
+        setCurrentPage("diplomeDetail");
+    }
+
+    function handleEditDiplome(id) {
+        setSelectedDiplomeId(id);
+        setCurrentPage("editDiplome");
     }
 
   return (
@@ -115,6 +130,27 @@ export default function DashBoard() {
             competenceId={selectedCompetenceId}
             onBack={() => setCurrentPage("competenceDetail")}
             onSaved={() => setCurrentPage("competenceDetail")}
+          />
+        )}
+        {currentPage === "createDiplome" && <CreationDiplome />}
+        {currentPage === "diplomes" && (
+          <PageDiplome
+            onSelectDiplome={handleSelectDiplome}
+            onEditDiplome={handleEditDiplome}
+          />
+        )}
+        {currentPage === "diplomeDetail" && (
+          <DiplomeDetail
+            diplomeId={selectedDiplomeId}
+            onBack={() => setCurrentPage("diplomes")}
+            onEdit={handleEditDiplome}
+          />
+        )}
+        {currentPage === "editDiplome" && (
+          <EditDiplome
+            diplomeId={selectedDiplomeId}
+            onBack={() => setCurrentPage("diplomeDetail")}
+            onSaved={() => setCurrentPage("diplomeDetail")}
           />
         )}
       </main>
