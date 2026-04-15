@@ -5,6 +5,7 @@ import { Article } from './Article.js';
 import { Experience } from './Experience.js';
 import { Competence } from './Competence.js';
 import { Diplome } from './Diplome.js';
+import { Certification } from './Certification.js';
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
 import cloudinary from "./cloudinary.js";
@@ -342,6 +343,89 @@ app.delete("/diplomes/:id", async (req, res) => {
             return res.status(404).json({ success: false, message: "Diplôme non trouvé" });
         }
         res.json({ success: true, message: "Diplôme supprimé" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Routes pour les certifications
+
+// Créer une certification
+app.post("/certifications", async (req, res) => {
+    try {
+        const { title, author, link, status } = req.body;
+
+        const newCertification = new Certification({
+            title,
+            author,
+            link,
+            status,
+        });
+
+        await newCertification.save();
+
+        res.json({ success: true, certification: newCertification });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Récupérer toutes les certifications
+app.get("/certifications", async (req, res) => {
+    try {
+        const certifications = await Certification.find().sort({ createdAt: -1 });
+        res.json(certifications);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Récupérer une certification par ID
+app.get("/certifications/:id", async (req, res) => {
+    try {
+        const certification = await Certification.findById(req.params.id);
+        if (!certification) {
+            return res.status(404).json({ success: false, message: "Certification non trouvée" });
+        }
+        res.json(certification);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Modifier une certification
+app.put("/certifications/:id", async (req, res) => {
+    try {
+        const { title, author, link, status } = req.body;
+        const certification = await Certification.findById(req.params.id);
+        if (!certification) {
+            return res.status(404).json({ success: false, message: "Certification non trouvée" });
+        }
+
+        const updatedCertification = await Certification.findByIdAndUpdate(
+            req.params.id,
+            { title, author, link, status },
+            { returnDocument: 'after' }
+        );
+        res.json({ success: true, certification: updatedCertification });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Erreur serveur" });
+    }
+});
+
+// Supprimer une certification
+app.delete("/certifications/:id", async (req, res) => {
+    try {
+        const certification = await Certification.findByIdAndDelete(req.params.id);
+        if (!certification) {
+            return res.status(404).json({ success: false, message: "Certification non trouvée" });
+        }
+        res.json({ success: true, message: "Certification supprimée" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: "Erreur serveur" });

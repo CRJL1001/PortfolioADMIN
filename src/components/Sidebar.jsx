@@ -61,6 +61,20 @@ export default function Sidebar({ onPageChange, activePage }) {
         >
           🧾 Tous les diplômes
         </button>
+
+        <button
+          className={activePage === "createCertification" ? "active" : ""}
+          onClick={() => onPageChange("createCertification")}
+        >
+          🏆 Créer une certification
+        </button>
+
+        <button
+          className={activePage === "certifications" ? "active" : ""}
+          onClick={() => onPageChange("certifications")}
+        >
+          📜 Toutes les certifications
+        </button>
       </nav>
     </aside>
   );

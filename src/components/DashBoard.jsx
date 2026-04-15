@@ -17,6 +17,10 @@ import CreationDiplome from "./CreationDiplome";
 import PageDiplome from "./PageDiplome";
 import DiplomeDetail from "./DiplomeDetail";
 import EditDiplome from "./EditDiplome";
+import CreationCertification from "./CreationCertification";
+import PageCertification from "./PageCertification";
+import CertificationDetail from "./CertificationDetail";
+import EditCertification from "./EditCertification";
 
 export default function DashBoard() {
     const [currentPage, setCurrentPage] = useState("create");
@@ -24,6 +28,7 @@ export default function DashBoard() {
     const [selectedExperienceId, setSelectedExperienceId] = useState(null);
     const [selectedCompetenceId, setSelectedCompetenceId] = useState(null);
     const [selectedDiplomeId, setSelectedDiplomeId] = useState(null);
+    const [selectedCertificationId, setSelectedCertificationId] = useState(null);
 
 
     function handlePageChange(page) {
@@ -68,6 +73,16 @@ export default function DashBoard() {
     function handleEditDiplome(id) {
         setSelectedDiplomeId(id);
         setCurrentPage("editDiplome");
+    }
+
+    function handleSelectCertification(id) {
+        setSelectedCertificationId(id);
+        setCurrentPage("certificationDetail");
+    }
+
+    function handleEditCertification(id) {
+        setSelectedCertificationId(id);
+        setCurrentPage("editCertification");
     }
 
   return (
@@ -151,6 +166,27 @@ export default function DashBoard() {
             diplomeId={selectedDiplomeId}
             onBack={() => setCurrentPage("diplomeDetail")}
             onSaved={() => setCurrentPage("diplomeDetail")}
+          />
+        )}
+        {currentPage === "createCertification" && <CreationCertification />}
+        {currentPage === "certifications" && (
+          <PageCertification
+            onSelectCertification={handleSelectCertification}
+            onEditCertification={handleEditCertification}
+          />
+        )}
+        {currentPage === "certificationDetail" && (
+          <CertificationDetail
+            certificationId={selectedCertificationId}
+            onBack={() => setCurrentPage("certifications")}
+            onEdit={handleEditCertification}
+          />
+        )}
+        {currentPage === "editCertification" && (
+          <EditCertification
+            certificationId={selectedCertificationId}
+            onBack={() => setCurrentPage("certificationDetail")}
+            onSaved={() => setCurrentPage("certificationDetail")}
           />
         )}
       </main>
