@@ -8,6 +8,7 @@ export default function EditCertification({ certificationId, onBack, onSaved }) 
   const [author, setAuthor] = useState("");
   const [link, setLink] = useState("");
   const [status, setStatus] = useState("en cours");
+  const [category, setCategory] = useState("web");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +20,7 @@ export default function EditCertification({ certificationId, onBack, onSaved }) 
         setAuthor(certification.author || "");
         setLink(certification.link || "");
         setStatus(certification.status || "en cours");
+        setCategory(certification.category || "web");
       } catch (err) {
         console.error(err);
       } finally {
@@ -38,6 +40,7 @@ export default function EditCertification({ certificationId, onBack, onSaved }) 
         author,
         link,
         status,
+        category,
       });
 
       alert("Certification mise à jour");
@@ -94,6 +97,20 @@ export default function EditCertification({ certificationId, onBack, onSaved }) 
         >
           <option value="en cours">En cours</option>
           <option value="acquis">Acquis</option>
+        </select>
+      </div>
+
+      <div className="cms-group">
+        <label>Catégorie</label>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="web">Web</option>
+          <option value="3D">3D</option>
+          <option value="game">Game</option>
+          <option value="app">App</option>
+          <option value="other">Other</option>
         </select>
       </div>
 

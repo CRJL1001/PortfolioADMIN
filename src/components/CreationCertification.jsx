@@ -7,6 +7,7 @@ export default function CreationCertification() {
     const [author, setAuthor] = useState("");
     const [link, setLink] = useState("");
     const [status, setStatus] = useState("en cours");
+    const [category, setCategory] = useState("web");
 
     const handleSubmit = async () => {
         try {
@@ -15,6 +16,7 @@ export default function CreationCertification() {
                 author,
                 link,
                 status,
+                category,
             });
             alert("Certification créée avec succès");
             // Reset form
@@ -22,6 +24,7 @@ export default function CreationCertification() {
             setAuthor("");
             setLink("");
             setStatus("en cours");
+            setCategory("web");
         } catch (err) {
             console.error(err);
             alert("Erreur lors de la création de la certification");
@@ -70,6 +73,20 @@ export default function CreationCertification() {
                 >
                     <option value="en cours">En cours</option>
                     <option value="acquis">Acquis</option>
+                </select>
+            </div>
+
+            <div className="cms-group">
+                <label>Catégorie</label>
+                <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                >
+                    <option value="web">Web</option>
+                    <option value="3D">3D</option>
+                    <option value="game">Game</option>
+                    <option value="app">App</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
 

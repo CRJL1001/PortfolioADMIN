@@ -354,13 +354,14 @@ app.delete("/diplomes/:id", async (req, res) => {
 // Créer une certification
 app.post("/certifications", async (req, res) => {
     try {
-        const { title, author, link, status } = req.body;
+        const { title, author, link, status, category } = req.body;
 
         const newCertification = new Certification({
             title,
             author,
             link,
             status,
+            category,
         });
 
         await newCertification.save();
@@ -400,7 +401,7 @@ app.get("/certifications/:id", async (req, res) => {
 // Modifier une certification
 app.put("/certifications/:id", async (req, res) => {
     try {
-        const { title, author, link, status } = req.body;
+        const { title, author, link, status, category } = req.body;
         const certification = await Certification.findById(req.params.id);
         if (!certification) {
             return res.status(404).json({ success: false, message: "Certification non trouvée" });
@@ -408,7 +409,7 @@ app.put("/certifications/:id", async (req, res) => {
 
         const updatedCertification = await Certification.findByIdAndUpdate(
             req.params.id,
-            { title, author, link, status },
+            { title, author, link, status, category },
             { returnDocument: 'after' }
         );
         res.json({ success: true, certification: updatedCertification });

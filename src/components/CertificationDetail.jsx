@@ -47,6 +47,9 @@ export default function CertificationDetail({ certificationId, onBack, onEdit })
           <Card.Text>
             <strong>Lien:</strong> <a href={certification.link} target="_blank" rel="noopener noreferrer">{certification.link}</a>
           </Card.Text>
+          <Card.Text>
+            <strong>Catégorie:</strong> {certification.category}
+          </Card.Text>
           <Badge bg={certification.status === "acquis" ? "success" : "warning"}>
             Statut: {certification.status}
           </Badge>

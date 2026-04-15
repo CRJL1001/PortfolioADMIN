@@ -43,6 +43,9 @@ export default function PageCertification({ onSelectCertification, onEditCertifi
                     Lien vers la certification
                   </a>
                 </Card.Text>
+                <Card.Text>
+                  Catégorie: {certification.category}
+                </Card.Text>
                 <Badge bg={certification.status === "acquis" ? "success" : "warning"}>
                   {certification.status}
                 </Badge>

@@ -49,10 +49,11 @@ export default function CreationArticle() {
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                 >
-                    <option value="web">Développement Web</option>
-                    <option value="3D">Modélisation 3D</option>
-                    <option value="game">Développement de Jeux</option>
-                    <option value="highlight">Mis en avant</option>
+                    <option value="web">Web</option>
+                    <option value="3D">3D</option>
+                    <option value="game">Game</option>
+                    <option value="app">App</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
 
