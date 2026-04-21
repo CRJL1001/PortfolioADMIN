@@ -92,6 +92,7 @@ export default function EditArticle({ articleId, onBack, onSaved }) {
           <option value="game">Game</option>
           <option value="app">App</option>
           <option value="other">Other</option>
+          <option value="highlight">Highlight</option>
         </select>
       </div>
 

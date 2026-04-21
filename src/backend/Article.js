@@ -6,7 +6,7 @@ const ArticleSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ["web", "3D", "game", "app", "other"],
+        enum: ["highlight","web", "3D", "game", "app", "other"],
     },
     images: { type: [String], default: [] },
     createdAt: { type: Date, default: Date.now },
